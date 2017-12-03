@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library;
+namespace App\Http\Library;
 
 /**
 * 图像处理类

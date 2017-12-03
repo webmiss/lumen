@@ -3,39 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Laravel\Lumen\Routing\Controller;
-use App\Library\Inc;
+use App\Http\Library\Inc;
 
 /* 公共控制器 */
 class ControllerBase extends Controller{
 
 	private $var = array();
-	protected $module='admin';
-
-	/* 构造函数 */
-	function __construct(){
-		// 参数
-		$this->getInc();
-	}
-
-	/* 公共参数 */
-	private function getInc(){
-		// Url
-		$url = array_values(array_filter(explode('/',$_SERVER['REQUEST_URI'])));
-		// 默认值
-		$h = isset($url[0])?$url[0]:'admin';
-		$c = isset($url[1])?$url[1]:'Index';
-		$a = isset($url[2])?explode('?',$url[2])[0]:'index';
-		// 常量
-		define('MODULE',$h);
-		define('CONTROLLER',$c);
-		define('ACTION',$a);
-	}
-
-	/* 跳转页面 */
-	function redirect($url=''){
-		return header('Location:'.Inc::getUrl(MODULE.'/'.$url));
-		// return redirect(MODULE.'/'.$url);
-	}
 
 	/* 设置参数 */
 	function setVar($name,$value=''){

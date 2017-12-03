@@ -1,5 +1,5 @@
 <?php
-use App\Library\Inc;
+use App\Http\Library\Inc;
 ?>
 <form action="<?php echo Inc::getUrl(MODULE.'/'.CONTROLLER.'/editData');?>" method="post" id="Form">
 <table class="table_add">

@@ -4,7 +4,7 @@
 * 安全验证类
 */
 
-namespace App\Library;
+namespace App\Http\Library;
 
 class Safety{
 	static function isRight($name='',$val=''){

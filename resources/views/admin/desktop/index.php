@@ -1,4 +1,4 @@
 <?php
-use App\Library\Inc;
+use App\Http\Library\Inc;
 ?>
 <?php echo Inc::getUrl(MODULE.'/');?>

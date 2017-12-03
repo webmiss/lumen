@@ -1,5 +1,5 @@
 <?php
-use App\Library\Inc;
+use App\Http\Library\Inc;
 ?>
 <div class="action">
 	<span class="title"><?php echo $Menus['Ctitle'];?></span>

@@ -33,9 +33,9 @@ $app->singleton(
 // $app->middleware([
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+	'admin' => App\Http\Middleware\Admin::class,
+]);
 
 /* 注册：服务 */
 $app->register(App\Providers\AppServiceProvider::class);
@@ -46,11 +46,11 @@ $app->register(App\Providers\EventServiceProvider::class);
 $app->router->group(['namespace' => 'App\Http\Controllers'], function ($app) {
 	// 网站前台
 	$app->group(['namespace' => 'Home'], function ($app) {
-		require __DIR__.'/routes/home.php';
+		require __DIR__.'/Http/Routes/home.php';
 	});
 	// 网站后台
 	$app->group(['prefix' => 'admin','namespace' => 'Admin'], function ($app) {
-		require __DIR__.'/routes/admin.php';
+		require __DIR__.'/Http/Routes/admin.php';
 	});
 });
 

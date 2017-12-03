@@ -4,7 +4,7 @@
 * 文件类
 */
 
-namespace App\Library;
+namespace App\Http\Library;
 
 class File{
 	public $file_root = '.';

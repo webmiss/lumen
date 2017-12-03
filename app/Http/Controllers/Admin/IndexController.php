@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Library\Inc;
 use App\Http\Model\SysAdmin;
 
 class IndexController extends ControllerBase{
+
+	/* 构造函数 */
+	public function __construct(){
+		// 参数
+		Inc::getUrlName('admin');
+	}
 
 	/* 首页 */
 	function index(){
@@ -69,13 +76,13 @@ class IndexController extends ControllerBase{
 	/* 退出 */
 	public function loginOut(){
 		unset($_SESSION['Admin']);
-		$this->redirect('index');
+		return redirect()->route('index');
 	}
 
 	/* 验证码 */
 	function vcode(){
 		/* 第三方类 */
-		$code = new \App\Library\Images();
+		$code = new \App\Http\Library\Images();
 		// 验证码
 		$code->getCode(80,23);
 	}

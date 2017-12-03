@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Model\SysAdmin;
 use App\Http\Model\SysMenu;
 use App\Http\Model\SysMenuAction;
 
@@ -14,54 +13,10 @@ class UserBase extends ControllerBase{
 
 	/* 构造函数 */
 	function __construct(){
-		parent::__construct();
-		// 是否登录
-		$admin = @$_SESSION['Admin'];
-		$ltime = $admin['ltime'];
-		$ntime = time();
-		if(!$admin['logged_in'] || $ltime<$ntime){
-			$this->redirect('index/loginOut');
-			return false;
-		}else{
-			$_SESSION['Admin']['ltime'] = time()+1800;
-		}
-		// 菜单权限
-		$perm = SysAdmin::where('id',$admin['id'])->first(['perm']);
-		$data = [];
-		$arr = explode(' ',$perm->perm);
-		foreach($arr as $val){
-			$a = explode(':',$val);
-			$data[$a[0]] = $a[1];
-		}
-		// 判断权限
-		$mid =  SysMenu::where('url',CONTROLLER)->first(['id']);
-		if(!isset($data[$mid->id])){
-			return $this->redirect('index/loginOut');
-		}
 		// 赋值权限
-		self::$perm = $data;
+		self::$perm = $_SESSION['Admin']['perm'];
 		// 用户信息
-		$this->setVar('Uinfo',$admin);
-	}
-
-	/* 菜单权限 */
-	function getPerm($uid){
-		$perm = SysAdmin::where('id',$uid)->first(['perm']);
-		// 拆分用户权限
-		$data = array();
-		$arr = explode(' ', $perm->perm);
-		foreach($arr as $val) {
-			$num = explode(':', $val);
-			$data[$num[0]] = $num[1];
-		}
-		// 菜单ID
-		$mid = SysMenu::where('url',CONTROLLER)->first(['id']);
-		// 判断权限
-		if(!isset($data[$mid->id])){
-			$this->redirect('index/loginOut');
-		}
-		// 保存菜单
-		$_SESSION['Admin']['perm'] = $data;
+		$this->setVar('Uinfo',$_SESSION['Admin']);
 	}
 
 	/* 获取菜单 */

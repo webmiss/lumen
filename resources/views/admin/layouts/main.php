@@ -1,5 +1,5 @@
 <?php
-use App\Library\Inc;
+use App\Http\Library\Inc;
 ?>
 <!DOCTYPE html>
 <html>

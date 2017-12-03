@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library;
+namespace App\Http\Library;
 
 class Inc{
 
@@ -9,6 +9,20 @@ class Inc{
 		$base_url = $_SERVER['SERVER_PORT']=='443'?'https://':'http://';
 		$base_url .= $_SERVER['HTTP_HOST'].'/'.$url;
 		return $base_url;
+	}
+
+	/* URL NAME */
+	static function getUrlName($module='home',$controller='index',$action='index'){
+		// Url
+		$url = array_values(array_filter(explode('/',$_SERVER['REQUEST_URI'])));
+		// 默认值
+		$h = isset($url[0])?$url[0]:$module;
+		$c = isset($url[1])?$url[1]:$controller;
+		$a = isset($url[2])?explode('?',$url[2])[0]:$action;
+		// 常量
+		define('MODULE',$h);
+		define('CONTROLLER',$c);
+		define('ACTION',$a);
 	}
 
 	/* Key */
