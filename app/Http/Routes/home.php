@@ -1,3 +1,3 @@
 <?php
 
-$app->get('/',['uses'=>'indexController@index']);
+$app->get('/',['uses'=>'IndexController@index']);
