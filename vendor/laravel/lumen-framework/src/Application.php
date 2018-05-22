@@ -2,15 +2,13 @@
 
 namespace Laravel\Lumen;
 
-use Monolog\Logger;
 use RuntimeException;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Log\LogManager;
 use Illuminate\Support\Composer;
 use Laravel\Lumen\Routing\Router;
-use Monolog\Handler\StreamHandler;
 use Illuminate\Container\Container;
-use Monolog\Formatter\LineFormatter;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
@@ -58,13 +56,6 @@ class Application extends Container
      * @var array
      */
     protected $ranServiceBinders = [];
-
-    /**
-     * A custom callback used to configure Monolog.
-     *
-     * @var callable|null
-     */
-    protected $monologConfigurator;
 
     /**
      * The application namespace.
@@ -133,7 +124,7 @@ class Application extends Container
      */
     public function version()
     {
-        return 'Lumen (5.5.2) (Laravel Components 5.5.*)';
+        return 'Lumen (5.6.3) (Laravel Components 5.6.*)';
     }
 
     /**
@@ -396,25 +387,10 @@ class Application extends Container
     protected function registerLogBindings()
     {
         $this->singleton('Psr\Log\LoggerInterface', function () {
-            if ($this->monologConfigurator) {
-                return call_user_func($this->monologConfigurator, new Logger('lumen'));
-            } else {
-                return new Logger('lumen', [$this->getMonologHandler()]);
-            }
+            $this->configure('logging');
+
+            return new LogManager($this);
         });
-    }
-
-    /**
-     * Define a callback to be used to configure Monolog.
-     *
-     * @param  callable  $callback
-     * @return $this
-     */
-    public function configureMonologUsing(callable $callback)
-    {
-        $this->monologConfigurator = $callback;
-
-        return $this;
     }
 
     /**
@@ -442,17 +418,6 @@ class Application extends Container
         $this->singleton('router', function () {
             return $this->router;
         });
-    }
-
-    /**
-     * Get the Monolog handler for the application.
-     *
-     * @return \Monolog\Handler\AbstractHandler
-     */
-    protected function getMonologHandler()
-    {
-        return (new StreamHandler(storage_path('logs/lumen.log'), Logger::DEBUG))
-                            ->setFormatter(new LineFormatter(null, null, true, true));
     }
 
     /**
@@ -853,6 +818,7 @@ class Application extends Container
             'Illuminate\Contracts\Queue\Queue' => 'queue.connection',
             'request' => 'Illuminate\Http\Request',
             'Laravel\Lumen\Routing\Router' => 'router',
+            'Illuminate\Contracts\Translation\Translator' => 'translator',
             'Laravel\Lumen\Routing\UrlGenerator' => 'url',
             'Illuminate\Contracts\Validation\Factory' => 'validator',
             'Illuminate\Contracts\View\Factory' => 'view',

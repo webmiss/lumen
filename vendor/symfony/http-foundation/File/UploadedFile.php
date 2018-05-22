@@ -55,13 +55,13 @@ class UploadedFile extends File
      * @throws FileException         If file_uploads is disabled
      * @throws FileNotFoundException If the file does not exist
      */
-    public function __construct($path, $originalName, $mimeType = null, $size = null, $error = null, $test = false)
+    public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null, bool $test = false)
     {
         $this->originalName = $this->getName($originalName);
         $this->mimeType = $mimeType ?: 'application/octet-stream';
         $this->size = $size;
         $this->error = $error ?: UPLOAD_ERR_OK;
-        $this->test = (bool) $test;
+        $this->test = $test;
 
         parent::__construct($path, UPLOAD_ERR_OK === $this->error);
     }
@@ -192,9 +192,11 @@ class UploadedFile extends File
 
             $target = $this->getTargetFile($directory, $name);
 
-            if (!@move_uploaded_file($this->getPathname(), $target)) {
-                $error = error_get_last();
-                throw new FileException(sprintf('Could not move the file "%s" to "%s" (%s)', $this->getPathname(), $target, strip_tags($error['message'])));
+            set_error_handler(function ($type, $msg) use (&$error) { $error = $msg; });
+            $moved = move_uploaded_file($this->getPathname(), $target);
+            restore_error_handler();
+            if (!$moved) {
+                throw new FileException(sprintf('Could not move the file "%s" to "%s" (%s)', $this->getPathname(), $target, strip_tags($error)));
             }
 
             @chmod($target, 0666 & ~umask());
