@@ -23,9 +23,9 @@ class Admin{
 		// 是否超时
 		$ltime = $admin['ltime'];
 		$ntime = time();
-		if(!$admin['logged_in'] || $ltime<$ntime){
+		if(!$admin['login'] || $admin['ltime']<time()){
 			abort(404);
-			return redirect()->route('loginOut');
+			return redirect()->route('logout');
 		}else{
 			$_SESSION['Admin']['ltime'] = time()+1800;
 		}
@@ -41,7 +41,7 @@ class Admin{
 		$mid =  SysMenu::where('url',CONTROLLER)->first(['id']);
 		if(!isset($data[$mid->id])){
 			abort(404);
-			return redirect()->route('loginOut');
+			return redirect()->route('logout');
 		}
 		// 权限
 		$_SESSION['Admin']['perm'] = $data;

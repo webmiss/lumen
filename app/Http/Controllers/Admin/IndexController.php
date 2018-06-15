@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Library\Inc;
 use App\Http\Model\SysAdmin;
+use App\Http\Library\Images;
 
 class IndexController extends ControllerBase{
 
@@ -68,22 +69,19 @@ class IndexController extends ControllerBase{
 			'name'=>$data['name'],
 			'department'=>$data['department'],
 			'position'=>$data['position'],
-			'ltime' => time()+1800,
-			'logged_in' => TRUE,
+			'ltime'=>time()+1800,
+			'login'=>TRUE
 		);
 	}
 
 	/* 退出 */
-	public function loginOut(){
+	public function logout(){
 		unset($_SESSION['Admin']);
 		return redirect()->route('index');
 	}
 
 	/* 验证码 */
 	function vcode(){
-		/* 第三方类 */
-		$code = new \App\Http\Library\Images();
-		// 验证码
-		$code->getCode(80,23);
+		Images::getCode(90,36);
 	}
 }

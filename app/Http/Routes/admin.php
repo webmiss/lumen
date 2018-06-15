@@ -4,7 +4,7 @@ $app->get('/',['as'=>'index','uses'=>'IndexController@index']);
 $app->get('/index',['uses'=>'IndexController@index']);
 $app->get('/index/vcode/{v}',['uses'=>'IndexController@vcode']);
 $app->post('/index/login',['uses'=>'IndexController@login']);
-$app->get('/index/loginOut',['as'=>'loginOut','uses'=>'IndexController@loginOut']);
+$app->get('/index/logout',['as'=>'logout','uses'=>'IndexController@logout']);
 
 $app->get('/Welcome',['middleware' => 'admin','uses'=>'WelcomeController@index']);
 $app->get('/Desktop',['middleware' => 'admin','uses'=>'DesktopController@index']);

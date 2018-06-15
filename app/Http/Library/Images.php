@@ -7,19 +7,16 @@ namespace App\Http\Library;
 */
 
 class Images{
+
 	/*
 	* 验证码类
 	* @param1 int width  - 宽度
 	* @param2 int height - 高度
 	* @param3 string fonts  - 字体路径
 	*/
-	function getCode($width=80, $height=28, $fonts='./upload/fonts/ariblk.ttf'){
-		// 字体是否存在
-		if(!is_file($fonts)){die('字体不存在: '.$fonts);}
-
+	static function getCode($width=80, $height=28, $fonts='upload/fonts/ariblk.ttf'){
 		// 清空当前缓冲区的数据
 		ob_clean();
-
 		// 创建图片
 		$image  = imagecreatetruecolor($width, $height);
 		// 设置背景
@@ -30,7 +27,7 @@ class Images{
 		/* 创建干扰点 */
 		for ($i=0; $i<300; $i++){
 			$diancolor =imagecolorallocate($image, rand(100,200), rand(60,120),rand(122,255));
-			imagesetpixel($image, rand(0,80),rand(0,28),$diancolor);
+			imagesetpixel($image, rand(0,$width),rand(0,$height),$diancolor);
 		}
 
 		/* 随机字符 */
@@ -51,7 +48,7 @@ class Images{
 
 		// 保存验证码
 		$_SESSION['V_CODE'] = strtolower($code);
-		
+
 		/* 输出到浏览器 */
 		header('content-type: image/png'); 	// 声明验证码的类型
 		imagepng($image);					// 生成一个png格式的图片
@@ -65,12 +62,12 @@ class Images{
 	* @param3 int width  - 字体路径
 	* @param2 int height - 高度
 	*/
-	function getThumb($src,$width=120,$height=75){
+	static function getThumb($src,$width=120,$height=75){
 		// 图片是否存在
 		if(!is_file($src)){die('原图不存在: '.$src);}
 
 		// 获取能够使用的后缀
-		$ext = $this->getFunctionName($src);
+		$ext = self::getFunctionName($src);
 		// 拼凑函数名
 		$open = 'imagecreatefrom'.$ext;
 		// 打开原图资源
@@ -122,15 +119,15 @@ class Images{
 	* @param3 int width  - 字体路径
 	* @param2 int height - 高度
 	*/
-	function getWater($src,$water='upload/water.png',$position='center',$opacity=70){
+	static function getWater($src,$water='upload/water.png',$position='center',$opacity=70){
 		// 图片是否存在
 		if(!is_file($src)){die('原图不存在: '.$src);}
 		// 图片是否存在
 		if(!is_file($water)){die('水印不存在: '.$water);}
 
 		// 获取能够使用的后缀
-		$s_ext = $this->getFunctionName($src);
-		$w_ext = $this->getFunctionName($water);
+		$s_ext = self::getFunctionName($src);
+		$w_ext = self::getFunctionName($water);
 		// 拼凑函数名
 		$s_open = 'imagecreatefrom'.$s_ext;
 		$w_open = 'imagecreatefrom'.$w_ext;
@@ -183,7 +180,7 @@ class Images{
 	}
 
 	// 获取文件后缀名
-	private function getFunctionName($file){
+	private static function getFunctionName($file){
 		// 常用后缀
 		$func = array(
 			'gif' => 'gif',
@@ -198,4 +195,5 @@ class Images{
 		//返回值
 		return $func[$ext];
 	}
+
 }
