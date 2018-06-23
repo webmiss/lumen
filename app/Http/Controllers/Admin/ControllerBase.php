@@ -35,30 +35,22 @@ class ControllerBase extends Controller{
 
 	/* 分页 */
 	function page($config=array()){
-
 		// 必须参数
-		if(!isset($config['model'])){die('请传入模型');}
+		if(!isset($config['model']))die('请传入模型');
 		// 命名空间
 		$namespace = isset($config['namespace'])?$config['namespace']:'App\\Http\\Model\\';
 		$config['model'] = $namespace.$config['model'];
-
 		// 默认值
 		$field = isset($config['field'])?$config['field']:'*';
 		$where = isset($config['where'])&&!empty($config['where'])?$config['where']:[];
 		$order = isset($config['order'])?$config['order']:'id';
 		$limit = isset($config['limit'])?$config['limit']:15;
 		$getUrl = isset($config['getUrl'])?$config['getUrl']:'';
-
 		// Page
 		$rows = isset($config['where'])&&!empty($config['where'])?$config['model']::where($config['where'])->count():$config['model']::count();
 		$page = empty($_GET['page'])?1:$_GET['page'];
-
-		// 计算页数
 		$page_count = ceil($rows/$limit);
-		if($page >= $page_count){
-			$page = $page_count;
-		}
-
+		$page = $page>=$page_count?$page_count:$page;
 		// 数据
 		$start=$limit*($page-1);
 		$data = $config['model']::select($field)->where($where)->orderBy($order)->skip($start)->take($limit)->get();
