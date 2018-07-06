@@ -10,17 +10,14 @@ Database : public/db/mvc.sql
 ```
 
 # Configuration
-### 1) Apache
+### 1) Apache（public/.htaccess）
 ```bash
-AllowOverride All
-Require all granted
-Options Indexes FollowSymLinks
-```
-public/.htaccess
-```bash
+# 编码
 AddDefaultCharset UTF-8
-
 <IfModule mod_rewrite.c>
+    # 目录浏览
+    Options Indexes FollowSymLinks
+    # 重写
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
