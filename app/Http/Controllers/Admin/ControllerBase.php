@@ -8,29 +8,29 @@ use App\Http\Library\Inc;
 /* 公共控制器 */
 class ControllerBase extends Controller{
 
-	private $var = array();
+	static private $var=[];
 
 	/* 设置参数 */
-	function setVar($name,$value=''){
-		$this->var[$name] = $value;
+	static function setVar($name,$value=''){
+		self::$var[$name] = $value;
 	}
 
 	/* 获取参数 */
-	function getVar($name){
-		return $this->var[$name];
+	static function getVar($name){
+		return self::$var[$name];
 	}
 
 	/* 模板视图 */
-	function setTemplate($template='',$file=''){
+	static function setTemplate($template='',$file=''){
 		// 中间内容
-		$this->var['__CONTENT__'] = view(MODULE.'/'.$file,$this->var);
+		self::$var['__CONTENT__'] = view(MODULE.'/'.$file,self::$var);
 		// 总视图
-		return view(MODULE.'/layouts/'.$template,$this->var);
+		return view(MODULE.'/layouts/'.$template,self::$var);
 	}
 
 	/* 视图 */
-	function view($file=''){
-		return view(MODULE.'/'.$file,$this->var);
+	static function view($file=''){
+		return view(MODULE.'/'.$file,self::$var);
 	}
 
 	/* 分页 */

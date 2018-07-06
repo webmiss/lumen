@@ -23,30 +23,30 @@ class SysMenusController extends UserBase{
 			$getUrl = '';
 		}
 		// 数据
-		$this->setVar('List',$this->page(array(
+		self::setVar('List',$this->page(array(
 			'model'=>'SysMenu',
 			'where'=>$where,
 			'getUrl'=>$getUrl
 		)));
 
 		// 获取菜单
-		$this->setVar('Menus',$this->getMenus());
+		self::setVar('Menus',$this->getMenus());
 		
 		// 视图
-		$this->setVar('LoadJS', array('system/sys_menus.js'));
-		return $this->setTemplate('main','system/menus/index');
+		self::setVar('LoadJS', array('system/sys_menus.js'));
+		return self::setTemplate('main','system/menus/index');
 	}
 
 	/* 搜索 */
 	function search(){
-		return $this->view('system/menus/sea');
+		return self::view('system/menus/sea');
 	}
 
 	/* 添加 */
 	function add(){
 		// 所有权限
-		$this->setVar('perm',SysMenuAction::get(['name','perm']));
-		return $this->view('system/menus/add');
+		self::setVar('perm',SysMenuAction::get(['name','perm']));
+		return self::view('system/menus/add');
 	}
 	function addData(){
 		// 是否有数据提交
@@ -73,10 +73,10 @@ class SysMenusController extends UserBase{
 	/* 编辑 */
 	function edit(){
 		// 所有权限
-		$this->setVar('perm',SysMenuAction::get(['name','perm']));
+		self::setVar('perm',SysMenuAction::get(['name','perm']));
 		// 视图
-		$this->setVar('edit',SysMenu::where('id',$_POST['id'])->first());
-		return $this->view('system/menus/edit');
+		self::setVar('edit',SysMenu::where('id',$_POST['id'])->first());
+		return self::view('system/menus/edit');
 	}
 	function editData(){
 		// 是否有数据提交
@@ -102,7 +102,7 @@ class SysMenusController extends UserBase{
 
 	/* 删除 */
 	function del(){
-		return $this->view('system/menus/del');
+		return self::view('system/menus/del');
 	}
 	function delData(){
 		// 是否有数据提交

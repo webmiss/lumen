@@ -9,6 +9,6 @@ class SystemController extends UserBase{
 		$menus = $this->getMenus();
 		$this->setVar('Menus',$menus);
 		// 视图
-		return $this->setTemplate('main','system/index');
+		return self::setTemplate('main','system/index');
 	}
 }

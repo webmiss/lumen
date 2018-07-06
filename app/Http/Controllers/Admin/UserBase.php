@@ -16,7 +16,7 @@ class UserBase extends ControllerBase{
 		// 赋值权限
 		self::$perm = $_SESSION['Admin']['perm'];
 		// 用户信息
-		$this->setVar('Uinfo',$_SESSION['Admin']);
+		self::setVar('Uinfo',$_SESSION['Admin']);
 	}
 
 	/* 获取菜单 */

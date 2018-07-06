@@ -7,8 +7,8 @@ class WebController extends UserBase{
 	function index(){
 		// 获取菜单
 		$menus = $this->getMenus();
-		$this->setVar('Menus',$menus);
+		self::setVar('Menus',$menus);
 		// 视图
-		return $this->setTemplate('main','web/index');
+		return self::setTemplate('main','web/index');
 	}
 }

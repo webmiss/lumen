@@ -16,7 +16,7 @@ class IndexController extends ControllerBase{
 
 	/* 首页 */
 	function index(){
-		return $this->view('layouts/login');
+		return self::view('layouts/login');
 	}
 
 	/* 登录 */

@@ -26,28 +26,28 @@ class SysAdminsController extends UserBase{
 			$getUrl = '';
 		}
 		// 数据
-		$this->setVar('List',$this->page(array(
+		self::setVar('List',$this->page(array(
 			'model'=>'SysAdmin',
 			'where'=>$where,
 			'getUrl'=>$getUrl
 		)));
 
 		// 获取菜单
-		$this->setVar('Menus',$this->getMenus());
+		self::setVar('Menus',$this->getMenus());
 
 		// 视图
-		$this->setVar('LoadJS', array('system/sys_admin.js'));
-		return $this->setTemplate('main','system/admin/index');
+		self::setVar('LoadJS', array('system/sys_admin.js'));
+		return self::setTemplate('main','system/admin/index');
 	}
 
 	/* 搜索 */
 	function search(){
-		return $this->view('system/admin/sea');
+		return self::view('system/admin/sea');
 	}
 
 	/* 添加 */
 	function add(){
-		return $this->view('system/admin/add');
+		return self::view('system/admin/add');
 	}
 	function addData(){
 		// 是否有数据提交
@@ -92,8 +92,8 @@ class SysAdminsController extends UserBase{
 	/* 编辑 */
 	function edit(){
 		// 视图
-		$this->setVar('edit',SysAdmin::where('id',$_POST['id'])->first());
-		return $this->view('system/admin/edit');
+		self::setVar('edit',SysAdmin::where('id',$_POST['id'])->first());
+		return self::view('system/admin/edit');
 	}
 	function editData(){
 		// 是否有数据提交
@@ -129,7 +129,7 @@ class SysAdminsController extends UserBase{
 
 	/* 删除 */
 	function del(){
-		return $this->view('system/admin/del');
+		return self::view('system/admin/del');
 	}
 	function delData(){
 		// 是否有数据提交
@@ -147,7 +147,7 @@ class SysAdminsController extends UserBase{
 
 	/* 审核 */
 	function audit(){
-		return $this->view('system/admin/audit');
+		return self::view('system/admin/audit');
 	}
 	function auditData(){
 		// 是否有数据提交
@@ -190,10 +190,10 @@ class SysAdminsController extends UserBase{
 			$a=explode(':',$val);
 			$permArr[$a[0]]=$a[1];
 		}
-		$this->setVar('permArr',$permArr);
-		$this->setVar('Perm',SysMenuAction::get(['name','perm']));
-		$this->setVar('Menus',$this->Menus());
-		return $this->view('system/admin/perm');
+		self::setVar('permArr',$permArr);
+		self::setVar('Perm',SysMenuAction::get(['name','perm']));
+		self::setVar('Menus',$this->Menus());
+		return self::view('system/admin/perm');
 	}
 	function permData(){
 		// 是否有数据提交

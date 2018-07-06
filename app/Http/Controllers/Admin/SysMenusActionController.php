@@ -22,28 +22,28 @@ class SysMenusActionController extends UserBase{
 			$getUrl = '';
 		}
 		// 数据
-		$this->setVar('List',$this->page(array(
+		self::setVar('List',$this->page(array(
 			'model'=>'SysMenuAction',
 			'where'=>$where,
 			'getUrl'=>$getUrl
 		)));
 
 		// 获取菜单
-		$this->setVar('Menus',$this->getMenus());
+		self::setVar('Menus',$this->getMenus());
 
 		// 视图
-		$this->setVar('LoadJS', array('system/sys_menus_action.js'));
-		return $this->setTemplate('main','system/action/index');
+		self::setVar('LoadJS', array('system/sys_menus_action.js'));
+		return self::setTemplate('main','system/action/index');
 	}
 
 	/* 搜索 */
 	function search(){
-		return $this->view('system/action/sea');
+		return self::view('system/action/sea');
 	}
 
 	/* 添加 */
 	function add(){
-		return $this->view('system/action/add');
+		return self::view('system/action/add');
 	}
 	function addData(){
 		// 是否有数据提交
@@ -66,8 +66,8 @@ class SysMenusActionController extends UserBase{
 	/* 编辑 */
 	function edit(){
 		// 视图
-		$this->setVar('edit',SysMenuAction::where('id',$_POST['id'])->first());
-		return $this->view('system/action/edit');
+		self::setVar('edit',SysMenuAction::where('id',$_POST['id'])->first());
+		return self::view('system/action/edit');
 	}
 	function editData(){
 		// 是否有数据提交
@@ -89,7 +89,7 @@ class SysMenusActionController extends UserBase{
 
 	/* 删除 */
 	function del(){
-		return $this->view('system/action/del');
+		return self::view('system/action/del');
 	}
 	function delData(){
 		// 是否有数据提交
