@@ -7,7 +7,7 @@ uanme: admin  passwd: admin
 # 安装
 ### 1) 克隆项目
 ``` bash
-git clone https://github.com/webmiss/phalcon phalcon
+git clone https://github.com/webmiss/lumen lumen
 ```
 ### 2) 导入数据库
 ``` bash
