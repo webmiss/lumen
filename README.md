@@ -5,21 +5,17 @@ Admin: http://lumen.webmis.vip/admin/<br>
 uanme: admin  passwd: admin
 
 # 安装
-### 1) Composer方式
+### 1) 克隆项目
 ``` bash
-composer create-project webmiss/lumen=1.0.* lumen
-```
-或者 composer.json
-``` bash
-{
-    "require": {
-        "webmiss/lumen":"1.0.*"
-    }
-}
+git clone https://github.com/webmiss/phalcon phalcon
 ```
 ### 2) 导入数据库
 ``` bash
 public/db/mvc.sql
+```
+### 3) 更新项目
+``` bash
+composer update
 ```
 
 # 美化URL
