@@ -5,9 +5,9 @@ Admin: http://lumen.webmis.vip/admin/<br>
 uanme: admin  passwd: admin
 
 # 安装
-### 1) 克隆项目
+### 1) 创建项目
 ``` bash
-git clone https://github.com/webmiss/lumen lumen
+composer create-project webmiss/lumen lumen
 ```
 ### 2) 导入数据库
 ``` bash
