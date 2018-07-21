@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Library\Page;
 use App\Http\Model\SysMenu;
 use App\Http\Model\SysMenuAction;
 
@@ -11,23 +12,24 @@ class SysMenusController extends UserBase{
 	function index(){
 		// 分页
 		if(isset($_GET['search'])){
-			$like = $this->pageWhere();
+			$like = Page::where();
 			// 生成搜索条件
 			$where = array();
 			foreach ($like['data'] as $key => $val){
 				$where[] = [$key,'LIKE','%'.$val.'%'];
 			}
 			$getUrl = $like['getUrl'];
+			self::setVar('getUrl',$like['search']);
 		}else{
 			$where = '';
 			$getUrl = '';
 		}
 		// 数据
-		self::setVar('List',$this->page(array(
+		self::setVar('List',Page::get([
 			'model'=>'SysMenu',
 			'where'=>$where,
 			'getUrl'=>$getUrl
-		)));
+		]));
 
 		// 获取菜单
 		self::setVar('Menus',$this->getMenus());
